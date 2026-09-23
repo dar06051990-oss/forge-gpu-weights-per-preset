@@ -34,7 +34,7 @@ Clone the repository directly into the `extensions` folder:
 
 ```bash
 cd /path/to/Forge-Neo/extensions
-git clone https://github.com/YOUR_USERNAME/forge-gpu-weights-per-preset.git
+git clone https://github.com/dar06051990-oss/forge-gpu-weights-per-preset.git
 ```
 
 Then restart Forge Neo.
