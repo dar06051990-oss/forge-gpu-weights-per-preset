@@ -1,0 +1,40 @@
+name: Publish GPU Weights v1.0.1 (one-time)
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/release-v1.0.1.yml
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify released code
+        uses: actions/checkout@v4
+        with:
+          ref: e1acaf43f8ee71b4c7b497daf7c86a80f3bfa4cf
+      - name: Check Python source and version
+        run: |
+          python3 -m py_compile scripts/gpu_weights_per_preset.py
+          grep -q '__version__ = "1.0.1"' scripts/gpu_weights_per_preset.py
+      - name: Publish v1.0.1
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cat > /tmp/release-notes.md <<'EOF'
+          ## GPU Weights per Preset v1.0.1 — Smooth slider fix
+
+          Fixed a problem where the GPU Weights slider would jerk back during dragging and manual number entry could be overwritten by delayed Gradio responses.
+
+          **Changes**
+          - No longer sends each input event back into its own active slider.
+          - Saves after mouse release or 0.45 seconds without input instead of writing config at every slider movement.
+          - Flushes pending values before switching presets.
+          - Retains all independent GPU Weights values for UI Presets.
+
+          The fix was tested in Forge Neo by the project owner.
+
+          **Update:** Update this extension in Forge Neo's Extensions tab or via Git, then restart Forge Neo completely. No additional dependencies.
+          EOF
+          gh release create v1.0.1 --repo "$GITHUB_REPOSITORY" --target "e1acaf43f8ee71b4c7b497daf7c86a80f3bfa4cf" --title "Forge GPU Weights per Preset v1.0.1 — Smooth slider fix" --notes-file /tmp/release-notes.md --latest
