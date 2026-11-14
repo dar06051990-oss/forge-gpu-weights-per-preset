@@ -13,6 +13,13 @@ A small extension for **Stable Diffusion WebUI Forge Neo** that restores the old
 - Converts MB values to Forge Neo's current `setting_allocated_vram` ratio internally.
 - Does **not** modify Forge core files.
 
+## What's new in v1.0.1
+
+- Smooth slider dragging and reliable manual number entry: Gradio no longer sends the incoming value back into the same active slider.
+- Save GPU Weights when the slider is released or 0.45 seconds after the last edit, rather than writing the Forge config on every movement.
+- Preserve pending edits when switching UI presets.
+- Per-preset GPU Weights values and settings remain unchanged.
+
 ## Why
 
 Older Forge builds exposed GPU Weights directly in the main UI and allowed different values for different presets. Forge Neo moved this to a single global setting. This extension restores per-preset behavior while keeping Forge Neo itself untouched.
@@ -61,7 +68,7 @@ You can also edit the defaults in:
 When loaded successfully, Forge prints a line similar to:
 
 ```text
-[Forge Neo] GPU Weights per Preset v1.0.0 loaded (VRAM detected: 16376 MB)
+[Forge Neo] GPU Weights per Preset v1.0.1 loaded (VRAM detected: 16376 MB)
 ```
 
 ## Compatibility
